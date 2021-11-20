@@ -1,7 +1,7 @@
 import axios from 'axios'
 // 利用element框架机制导入报错时弹出
 import { ElMessage } from 'element-plus'
-
+import { isCheckTimeOut } from './auth.js'
 // import { getItem } from '@/utils/storage.js'
 // import { TOKEN } from '@/common/common.js'
 
@@ -25,7 +25,13 @@ server.interceptors.request.use(
     if (store.getters.token) {
       // 如果存在TOKEN 进行封装,不存在就不封装
       // 请求的不是login
-      config.headers.Authorization = `${store.getters.token}`
+      if (!isCheckTimeOut()) {
+        // 过期执行退出登录
+        store.dispatch('user/logout')
+        // 不应该请求
+        return Promise.reject(new Error('token 过期'))
+      }
+      config.headers.Authorization = `Bearer ${store.getters.token}`
     }
 
     // }
@@ -35,6 +41,7 @@ server.interceptors.request.use(
   },
   (error) => {
     // Do something with request error
+    console.log('白家安白家安吧唧吧唧啊')
     return Promise.reject(error)
   }
 )
@@ -56,8 +63,16 @@ server.interceptors.response.use(
     }
   },
   (error) => {
+    // token 失效(code 401) 单点登录 后台会返回特定的状态码 执行退出
+    if (error.response && error.respones && error.response.data.code === 401) {
+      store.dispatch('user/logout')
+    }
+    console.log(error, '白家安不吧唧吧唧')
     // 服务器没有返回数据或者是服务器未知错误
-
+    ElMessage({
+      type: 'error',
+      message: error.message
+    })
     // Do something with response error
     return Promise.reject(error)
   }

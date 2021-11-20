@@ -4,7 +4,7 @@ import store from '@/store/index.js'
 import router from './router/index.js'
 
 const whiteRouter = ['/login']
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   /* 
      用户鉴权
       当用户未登录时(没有token) 只能进入login页面
@@ -19,6 +19,15 @@ router.beforeEach((to, from, next) => {
       // 如果在有值的情况下就不允许跳转到到登录页面
       next('/')
     } else {
+      // 登录成功 跳转到首页 判断如果没有用户的信息 就去发送axios
+      if (!store.getters.hasUserInfo) {
+        // 判断没有用户的信息 就去发送axios
+        // setTimeout(async () => {
+        //   await store.dispatch('user/getUserInfo')
+        //   next()
+        // }, 70000)
+        await store.dispatch('user/getUserInfo')
+      }
       next() // 没有值的时候才可以跳转
     }
   } else {
