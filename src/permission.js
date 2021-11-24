@@ -13,8 +13,8 @@ router.beforeEach(async (to, from, next) => {
 
   if (store.getters.token) {
     // 如果有值就是已经登录的了
-    console.log(to, 'to')
-    console.log(store.getters.token)
+    // console.log(to, 'to')
+    // console.log(store.getters.token)
     if (to.path === '/login') {
       // 如果在有值的情况下就不允许跳转到到登录页面
       next('/')
@@ -31,7 +31,7 @@ router.beforeEach(async (to, from, next) => {
       next() // 没有值的时候才可以跳转
     }
   } else {
-    console.log(from, 'from')
+    // console.log(from, 'from')
     if (whiteRouter.indexOf(to.path) > -1) {
       // 如果在没有值的时候跳转到登录页面是可行的
       next()

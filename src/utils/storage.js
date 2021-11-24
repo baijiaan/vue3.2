@@ -10,7 +10,6 @@ export const setItem = (key, value) => {
 export const getItem = (key) => {
   const value = window.localStorage.getItem(key)
   // 对象的字符串,也就是json格式 '{'name':'白家安'}'  '
-  // try 语法没搞懂
   try {
     // 是一个对象
     return JSON.parse(value)
