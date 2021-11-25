@@ -9,7 +9,9 @@
         :rules="loginRules"
       >
         <div class="title-container">
-          <h3 class="title">用户登录</h3>
+          <h3 class="title">{{ $t('msg.login.title') }}</h3>
+          <!-- 翻译组件 -->
+          <select-lang class="select-lang" />
 
           <el-form-item prop="username">
             <span class="svg-container">
@@ -38,22 +40,28 @@
             </span>
           </el-form-item>
 
-          <el-button type="primary" style="width: 100%" @click="handleLogin"
-            >登录{{ store.state.user.token }}</el-button
-          >
+          <el-button type="primary" style="width: 100%" @click="handleLogin">{{
+            $t('msg.login.loginBtn')
+          }}</el-button>
+          <!-- 账号信息 -->
+          <div class="tips" v-html="$t('msg.login.desc')"></div>
         </div>
       </el-form>
     </div>
   </div>
 </template>
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, watch } from 'vue'
 import { useStore } from 'vuex'
 // 存放的点击事件方法
-import { passwordValidator } from './rules.js'
+import { passwordValidator, usernameValidator } from './rules.js'
 
 // 引入路由
 import { useRouter } from 'vue-router'
+
+// 国际化组件
+import SelectLang from '@/components/SelectLang/index.vue'
+
 // 初始化input的内容
 const loginFrom = ref({
   username: 'super-admin',
@@ -71,7 +79,8 @@ const loginRules = ref({
     {
       required: true, // 表示必填
       trigger: 'blur', // 表示失去焦点
-      message: '账号必须填写' // 提示消息
+      validator: usernameValidator // validator具有响应式
+      // message: '账号必须填写' // 提示消息  //message不具备响应式
     }
   ],
   password: [
@@ -88,7 +97,7 @@ const store = useStore()
 // 给整个表单设置ref 从而达到获取表单的目的
 /*
   知识点:
-   引用dom 
+   引用dom
 */
 const router = useRouter()
 const loginRef = ref(null)
@@ -102,12 +111,22 @@ const handleLogin = () => {
     }
     // 验证通过执行登录逻辑 调用定义的actions 因为是子模块需要在加一个路径才能调用的到
 
-    store.dispatch('user/login', loginFrom.value)
-    router.push({
-      name: 'Index'
+    store.dispatch('user/login', loginFrom.value).then((res) => {
+      router.push({
+        name: 'Index'
+      })
     })
   })
 }
+// 重新触发效验规则以达到国际化的目的 (监听getters中的language的变化)
+watch(
+  () => store.getters.language,
+  (newValue, oldValue) => {
+    // 中英文切换重新执行
+    loginRef.value.validateField('username')
+    loginRef.value.validateField('password')
+  }
+)
 
 // 背景图片的设置
 // import Svglcon from '../../icons/svglcon.vue'
@@ -149,6 +168,15 @@ $cursor: #fff;
         margin: 0px auto 40px auto;
         font-weight: bold;
       }
+      :deep(.select-lang) {
+        position: absolute;
+        top: 170px;
+        right: 40px;
+        background-color: rgba(0, 0, 0, 0.1);
+        font-size: 24px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
     }
     :deep(.el-form-item) {
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -177,6 +205,12 @@ $cursor: #fff;
       color: $dark_gray;
       vertical-align: middle;
       display: inline-block;
+    }
+    .tips {
+      font-size: 14px;
+      line-height: 28px;
+      color: #fff;
+      margin-bottom: 10px;
     }
   }
 }

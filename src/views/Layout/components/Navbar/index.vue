@@ -2,9 +2,11 @@
   <div class="navbar">
     <!-- 切换侧边栏的组件 -->
     <cuttle class="cuttle-container" />
-    <!-- 面包屑 -->
+    <!-- 面包屑 组件-->
     <breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
+      <!-- 国际化按钮 -->
+      <select-lang class="right-menu-item" />
       <el-dropdown class="avatar-container">
         <!--   -->
         <div class="avatar-wrapper">
@@ -12,11 +14,11 @@
         </div>
         <template #dropdown>
           <el-dropdown-menu class="user-drop-down">
-            <el-dropdown-item>首页</el-dropdown-item>
-            <el-dropdown-item>课程主页</el-dropdown-item>
-            <el-dropdown-item divided @click="logout"
-              >退出登录</el-dropdown-item
-            >
+            <el-dropdown-item>{{ $t('msg.navBar.home') }}</el-dropdown-item>
+            <el-dropdown-item>{{ $t('msg.navBar.course') }}</el-dropdown-item>
+            <el-dropdown-item divided @click="logout">{{
+              $t('msg.navBar.logout')
+            }}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -28,6 +30,7 @@ import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import avatar from '@/assets/logo.png'
 import { useStore } from 'vuex'
 import Cuttle from '@/components/Cuttle/index.vue'
+import SelectLang from '@/components/SelectLang/index.vue'
 // 主动退出
 const store = useStore()
 const logout = () => {
@@ -47,7 +50,18 @@ const logout = () => {
     align-items: center;
     float: right;
     padding-right: 16px;
-
+    :deep(.right-menu-item) {
+      display: inline-block;
+      padding: 0 18px -1px 0;
+      font-size: 24px;
+      color: #ccc;
+      margin-right: 10px;
+      vertical-align: text-bottom;
+      cursor: pointer;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
     .avatar-container {
       cursor: pointer;
       .avatar-wrapper {

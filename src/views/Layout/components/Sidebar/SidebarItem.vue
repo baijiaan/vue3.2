@@ -1,11 +1,7 @@
 <template>
   <!-- 这个页面接收从SidebarMenu.vue传过来的的路由表信息并做出相应的操作 -->
   <!-- 有二级菜单 -->
-  <el-submenu
-    v-if="route.children.length > 0"
-    :index="route.path"
-    @click="fn(route)"
-  >
+  <el-submenu v-if="route.children.length > 0" :index="route.path">
     <!--  -->
     <template #title>
       <!-- 这个子组件封装的是图标和菜单文字信息 title传的是菜单文字 icon传的是svg图片 -->
@@ -35,9 +31,6 @@ defineProps({
     required: true
   }
 })
-const fn = (val) => {
-  console.log(val, '111112222')
-}
 // console.log(route.value, '1111')
 </script>
 <style lang="scss" scoped></style>
