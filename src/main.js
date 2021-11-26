@@ -2,8 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import installElementPlus from './plugins/element'
-
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 // 加载svg的处理
 import initSvaIcon from './icons/index.js'
 
@@ -17,8 +17,8 @@ import i18n from '@/i18n/index.js'
 // import "./styles/variables.scss"
 const app = createApp(App)
 initSvaIcon(app)
-installElementPlus(app)
-app.use(store).use(i18n).use(router).mount('#app')
+// installElementPlus(app)
+app.use(store).use(i18n).use(router).use(ElementPlus).mount('#app')
 
 /*eslint-disable*/
 /*  

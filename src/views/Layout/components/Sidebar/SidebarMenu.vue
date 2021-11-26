@@ -45,4 +45,11 @@ const activePath = computed(() => {
   return path
 })
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.el-sub-menu__title) {
+  display: block !important;
+}
+:deep(.el-menu-item) {
+  display: block !important;
+}
+</style>

@@ -7,7 +7,7 @@
     <side-bar
       id="guidr-sidebar"
       class="sidebar-container"
-      :style="{ backgroundColor: variables.subMenuBg }"
+      :style="{ backgroundColor: store.getters.cssVar.menuBg }"
     />
     <!-- 内容(右边) -->
     <div class="main-container">
@@ -24,8 +24,6 @@ import AppMain from './components/Appmain/index.vue'
 import NavBar from './components/Navbar/index.vue'
 import { useStore } from 'vuex'
 
-// 变量scss用法
-import variables from '@/styles/variables.scss'
 const store = useStore()
 </script>
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="side">
     <!-- logo伸缩显示样式 -->
     <div class="logo-container">
       <!-- 图片是无论伸或者缩都是出现的所以无需做判断 -->
@@ -17,9 +17,17 @@
 import Logo from '@/assets/logo.png'
 import SidebarMenu from './SidebarMenu.vue'
 import { useStore } from 'vuex'
+import { computed } from 'vue'
 const store = useStore()
+// 可行
+// const bgcolor = computed(() => {
+//   return store.getters.cssVar.menuBg
+// })
 </script>
 <style lang="scss" scoped>
+// .side {
+//   background-color: v-bind(bgcolor) !important;
+// }
 .logo-container {
   height: 44px;
   padding: 10px 0 22px 0;

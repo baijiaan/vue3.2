@@ -1,7 +1,7 @@
 <template>
   <!-- 这个页面接收从SidebarMenu.vue传过来的的路由表信息并做出相应的操作 -->
   <!-- 有二级菜单 -->
-  <el-submenu v-if="route.children.length > 0" :index="route.path">
+  <el-sub-menu v-if="route.children.length > 0" :index="route.path">
     <!--  -->
     <template #title>
       <!-- 这个子组件封装的是图标和菜单文字信息 title传的是菜单文字 icon传的是svg图片 -->
@@ -15,7 +15,7 @@
       :key="item.path"
       :route="item"
     />
-  </el-submenu>
+  </el-sub-menu>
   <!-- 只有一级的菜单 -->
   <el-menu-item :index="route.path" v-else>
     <!--  -->

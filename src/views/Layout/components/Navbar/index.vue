@@ -5,6 +5,8 @@
     <!-- 面包屑 组件-->
     <breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
+      <!-- 主题换肤的组件 -->
+      <theme class="right-menu-item" />
       <!-- 国际化按钮 -->
       <select-lang class="right-menu-item" />
       <el-dropdown class="avatar-container">
@@ -31,6 +33,7 @@ import avatar from '@/assets/logo.png'
 import { useStore } from 'vuex'
 import Cuttle from '@/components/Cuttle/index.vue'
 import SelectLang from '@/components/SelectLang/index.vue'
+import Theme from '@/components/Theme/index.vue'
 // 主动退出
 const store = useStore()
 const logout = () => {
@@ -52,7 +55,7 @@ const logout = () => {
     padding-right: 16px;
     :deep(.right-menu-item) {
       display: inline-block;
-      padding: 0 18px -1px 0;
+      // padding: 0 18px 0px 0;
       font-size: 24px;
       color: #ccc;
       margin-right: 10px;
