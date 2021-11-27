@@ -5,10 +5,15 @@
     <!-- 面包屑 组件-->
     <breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
+      <!-- 导航搜索 -->
+      <sear-ch class="right-menu-item" />
+      <!-- 全屏切换 -->
+      <screen-full class="right-menu-item" />
       <!-- 主题换肤的组件 -->
       <theme class="right-menu-item" />
       <!-- 国际化按钮 -->
       <select-lang class="right-menu-item" />
+
       <el-dropdown class="avatar-container">
         <!--   -->
         <div class="avatar-wrapper">
@@ -34,6 +39,10 @@ import { useStore } from 'vuex'
 import Cuttle from '@/components/Cuttle/index.vue'
 import SelectLang from '@/components/SelectLang/index.vue'
 import Theme from '@/components/Theme/index.vue'
+// 全屏
+import ScreenFull from '@/components/Sureenfull/index.vue'
+//  搜索
+import SearCh from '@/components/Search/index.vue'
 // 主动退出
 const store = useStore()
 const logout = () => {

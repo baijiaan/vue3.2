@@ -32,6 +32,7 @@ export const predefineColors = [
 export const colorMap = {
   '#3a8ee6': 'shade-1',
   '#409eff': 'primary',
+  '#67c23a': 'primary',
   '#53a8ff': 'light-1',
   '#66b1ff': 'light-2',
   '#79bbff': 'light-3',
@@ -41,7 +42,8 @@ export const colorMap = {
   '#c6e2ff': 'light-7',
   '#d9ecff': 'light-8',
   '#ecf5ff': 'light-9',
-  '#0d84ff': 'light-3'
+  '#0d84ff': 'light-3',
+  '#85ce61': 'light-4'
 }
 
 export const colorTables = {

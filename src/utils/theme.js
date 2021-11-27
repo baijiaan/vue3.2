@@ -11,13 +11,14 @@ export const generateNewStyle = async (primary) => {
   // const cssTemplate =
   // 2.分析原始样式  找出需要替换的颜色 做上标记
   let newStyle = getStyleTemplate(originalStyle)
-  // console.log(newStyle,'已经替换了')
+  // console.log(newStyle,'已经替换了并且已经打上了标记')
   // 3.根据主色生成对应的情景色
   const newColors = generateColors(primary)
-  console.log(newColors)
+  // console.log(newColors, '22222')
 
-  // 4. 在newStyle的末班中将标记统一替换成已经生成的色值
+  // 4. 在newStyle的模班中将标记统一替换成已经生成的色值
   Object.keys(newColors).forEach((key) => {
+    // key值和打入css样式的标识一样 所以通过查找key值并替换成我自己生成的相对应的主色和情景色 然后再利用原生js把他导入到header的最后使其生效
     newStyle = newStyle.replace(
       new RegExp('(:|\\s+)' + key, 'g'),
       '$1' + newColors[key]
@@ -35,6 +36,7 @@ const getOriginalStyle = async () => {
 const getStyleTemplate = (Style) => {
   Object.keys(colorMap).forEach((key) => {
     const value = colorMap[key]
+
     Style = Style.replace(new RegExp(key, 'gi'), value)
   })
   return Style
@@ -45,13 +47,15 @@ export const generateColors = (primary) => {
   const colors = {
     primary
   }
+  console.log(colors, '11')
   Object.keys(colorTables).forEach((key) => {
-    // 将主色应用到color 函数中
+    // 将主色应用到color 函数中    利用正则查找colorTables中所有的primary字符串 并替换成primary变量
     const value = colorTables[key].replace(new RegExp(/primary/g), primary)
+    // console.log(value, 'value')
     // 生成16进制的颜色 替换color(primary tint(10%)
     colors[key] = '#' + rgbHex(color.convert(value))
   })
-  console.log(colors, 'color')
+  // console.log(colors, 'color')
   return colors
 }
 // 将生成的样式写入到head标签中 原生的方法
