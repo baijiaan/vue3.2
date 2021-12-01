@@ -13,8 +13,11 @@
     <div class="main-container">
       <div class="fixed-header">
         <nav-bar />
+        <!-- tag view -->
+        <tag-view />
       </div>
-      <app-main />
+
+      <app-main class="appmain" />
     </div>
   </div>
 </template>
@@ -22,6 +25,7 @@
 import SideBar from './components/Sidebar/index.vue'
 import AppMain from './components/Appmain/index.vue'
 import NavBar from './components/Navbar/index.vue'
+import TagView from '@/components/TagView/index.vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
@@ -55,7 +59,7 @@ const store = useStore()
 }
 .hideSidebar {
   .sidebar-container {
-    ::v-deep .el-menu {
+    :deep(.el-menu) {
       .el-menu-item {
         padding: 0px 0px 0px 20px !important;
       }
@@ -64,5 +68,8 @@ const store = useStore()
   .fixed-header {
     width: calc(100% - #{$sideBarhideWidth});
   }
+}
+.appmain {
+  margin-top: 34px;
 }
 </style>

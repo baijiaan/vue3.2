@@ -40,8 +40,8 @@ watch(
     breadcrumbData.value = route.matched.filter((item) => {
       return item.meta && item.meta.title
     })
-    console.log(route.matched, 'kkkkkkkkk')
-    console.log(breadcrumbData.value, '白家安白家安白家安')
+    // console.log(route.matched, 'kkkkkkkkk')
+    // console.log(breadcrumbData.value, '白家安白家安白家安')
   },
   { immediate: true }
 )

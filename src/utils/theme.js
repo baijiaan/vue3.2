@@ -47,7 +47,7 @@ export const generateColors = (primary) => {
   const colors = {
     primary
   }
-  console.log(colors, '11')
+  // console.log(colors, '11')
   Object.keys(colorTables).forEach((key) => {
     // 将主色应用到color 函数中    利用正则查找colorTables中所有的primary字符串 并替换成primary变量
     const value = colorTables[key].replace(new RegExp(/primary/g), primary)

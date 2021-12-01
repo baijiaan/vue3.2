@@ -17,7 +17,7 @@
     />
   </el-sub-menu>
   <!-- 只有一级的菜单 -->
-  <el-menu-item :index="route.path" v-else>
+  <el-menu-item :index="route.path" v-else @click="fn(route)">
     <!--  -->
     <menu-item :title="route.meta.title" :icon="route.meta.icon" />
   </el-menu-item>

@@ -15,7 +15,8 @@ export default {
   },
   sideBarOpen: (state) => state.app.sideBarOpend,
   language: (state) => state.app.language,
-  theme_color: (state) => state.theme.myColor
+  theme_color: (state) => state.theme.myColor,
+  tagViewList: (state) => state.tagViewList.tagViewList
 }
 // colors={
 //   menuBg: ;

@@ -17,7 +17,7 @@ const messages = {
 }
 // 定义语言的类型
 const locale = store.getters.language || 'en'
-console.log(messages.zh.msg)
+// console.log(messages.zh.msg)
 // 初始化i18n
 const i18n = createI18n({
   legacy: false, // 配合vue3.2是组合式api(components API)

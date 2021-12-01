@@ -98,11 +98,13 @@ export const generateFuse = (routes, titles = []) => {
       // 变成国际化
       const title = i18n.global.t('msg.route.' + route.meta.title)
       data.title = [...data.title, title]
+      // console.log(data.title, '111')
       res.push(data)
     }
     // 处理一级菜单的子路由
     if (route.children && route.children.length > 0) {
       const subRes = generateFuse(route.children, data.title)
+      // console.log(data.title)
       if (subRes.length > 0) {
         res = [...res, ...subRes]
       }

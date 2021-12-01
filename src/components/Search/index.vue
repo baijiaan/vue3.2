@@ -60,14 +60,16 @@ const search = ref('')
 
 const searchResult = ref([])
 // 检索方法  根据输入的值检索已经处理好的数据源 并将准备的数据源通过插件在页面进行模拟查询展示  借助一个插件 进行模糊匹配
+// 点击input的时候将输入的值传入配置的fuse内进行匹配  将匹配到的值传给searchResult 在页面上进行遍历展示
 const querySearch = (query) => {
-  searchResult.value = fuse.search(query)
-  console.log(query)
+  searchResult.value = fuse.search(query) // search是fuse.js的值
+  // console.log(query)
 }
 
 // 选中option 触发的方法
+// 点击下拉列表的时候触发
 const onSelectChange = (value) => {
-  console.log(value)
+  console.log(value, '222222222222222222222222222-')
   // 点击清空value
   search.value = value.title.join('>')
   // 跳转
@@ -78,8 +80,12 @@ let lists = computed(() => {
   // 去除重复的路由
   const filterRoutes = filterRouter(router.getRoutes())
   // 格式化路由 1.具备meta && meta.title 2.过滤掉动态路由
+  // console.log(filterRoutes, '状态树')
+  // console.log(generateFuse(filterRoutes), '状态树2')
+  // console.log(router.getRoutes(), '初始路由')
   return generateFuse(filterRoutes)
 })
+
 // 初始化 fuse.js  作用:模糊搜索的工具
 let fuse
 const initFuse = (list) => {
@@ -93,7 +99,7 @@ const initFuse = (list) => {
       },
       {
         name: 'title',
-        weight: 0.9
+        weight: 0.3
       }
     ]
   })
@@ -122,7 +128,7 @@ const onClose = () => {
 
 watch(isShow, (val) => {
   if (val) {
-    console.log('2222222', val)
+    // console.log('2222222', val)
     document.body.addEventListener('click', onClose)
   } else {
     // 解除绑定事件

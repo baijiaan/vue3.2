@@ -22,7 +22,7 @@ router.beforeEach(async (to, from, next) => {
       // 登录成功 跳转到首页 判断如果没有用户的信息 就去发送axios
       if (!store.getters.hasUserInfo) {
         // 判断没有用户的信息 就去发送axios
-        // setTimeout(async () => {
+        // setTimeout(async () => {.axios的请求
         //   await store.dispatch('user/getUserInfo')
         //   next()
         // }, 70000)
