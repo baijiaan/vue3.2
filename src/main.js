@@ -9,7 +9,8 @@ import initSvaIcon from './icons/index.js'
 
 // 测试右键菜单
 import VueContextMenu from 'vue-contextmenu'
-
+// 注册全局过滤属性
+import initfilters from '@/filters/index.js'
 // 用户鉴权
 import './permission.js'
 // import "./icons/index.js"
@@ -20,6 +21,7 @@ import i18n from '@/i18n/index.js'
 // import "./styles/variables.scss"
 const app = createApp(App)
 initSvaIcon(app)
+initfilters(app)
 // installElementPlus(app)
 app
   .use(store)

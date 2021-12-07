@@ -37,6 +37,7 @@ import { watchLang } from '@/utils/i18n.js'
 const router = useRouter()
 const isShow = ref(false)
 const searchSelectRef = ref(null)
+// console.log(searchSelectRef.value)
 const toggleShow = () => {
   if (isShow.value) {
     // 收起
@@ -62,6 +63,7 @@ const searchResult = ref([])
 // 检索方法  根据输入的值检索已经处理好的数据源 并将准备的数据源通过插件在页面进行模拟查询展示  借助一个插件 进行模糊匹配
 // 点击input的时候将输入的值传入配置的fuse内进行匹配  将匹配到的值传给searchResult 在页面上进行遍历展示
 const querySearch = (query) => {
+  console.log(query)
   searchResult.value = fuse.search(query) // search是fuse.js的值
   // console.log(query)
 }
@@ -85,7 +87,7 @@ let lists = computed(() => {
   // console.log(router.getRoutes(), '初始路由')
   return generateFuse(filterRoutes)
 })
-
+console.log(lists.value)
 // 初始化 fuse.js  作用:模糊搜索的工具
 let fuse
 const initFuse = (list) => {

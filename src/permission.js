@@ -2,7 +2,7 @@
 import store from '@/store/index.js'
 // 进入每一个路由都会执行这个钩子
 import router from './router/index.js'
-
+//
 const whiteRouter = ['/login']
 router.beforeEach(async (to, from, next) => {
   /* 
@@ -21,6 +21,7 @@ router.beforeEach(async (to, from, next) => {
     } else {
       // 登录成功 跳转到首页 判断如果没有用户的信息 就去发送axios
       if (!store.getters.hasUserInfo) {
+        // true
         // 判断没有用户的信息 就去发送axios
         // setTimeout(async () => {.axios的请求
         //   await store.dispatch('user/getUserInfo')

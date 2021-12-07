@@ -20,6 +20,7 @@ const mutations = {
     utils.setItem(TOKEN, token)
   },
   setUserInfo(state, userInfo) {
+    console.log(userInfo, '白家安111')
     state.userInfo = userInfo
     utils.setItem(USER_INFO, userInfo)
   }
@@ -33,7 +34,8 @@ const actions = {
         username,
         password: md5(password)
       }).then((res) => {
-        // console.log(res.token, '11444444411') // 请求后端的数据
+        console.log(res, '222')
+        console.log(res.token, '11444444411') // 请求后端的数据
         // 保存在vuex中
         commit('setToken', res.token)
         // 保存token 到vuex 和 本地存储中

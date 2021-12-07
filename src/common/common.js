@@ -33,7 +33,6 @@ export const predefineColors = [
 export const colorMap = {
   '#3a8ee6': 'shade-1',
   '#409eff': 'primary',
-  '#67c23a': 'primary',
   '#53a8ff': 'light-1',
   '#66b1ff': 'light-2',
   '#79bbff': 'light-3',
@@ -62,4 +61,12 @@ export const colorTables = {
   subMenuBg: 'color(primary tint(80%))',
   menuHover: 'color(primary tint(90%))',
   menuBg: 'color(primary)'
+}
+
+// excel 批量导入 字段对应关系
+export const USER_RELATION = {
+  姓名: 'username',
+  联系方式: 'mobile',
+  角色: 'role',
+  开通时间: 'openTime'
 }

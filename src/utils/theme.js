@@ -26,9 +26,10 @@ export const generateNewStyle = async (primary) => {
   })
   return newStyle
 }
+// `https://unpkg.com/element-plus@${version}/dist/index.css`
 const getOriginalStyle = async () => {
-  const version = require('element-plus/package.json').version
-  const url = `https://unpkg.com/element-plus@${version}/dist/index.css`
+  // const version = require('element-plus/package.json').version
+  const url = 'http://localhost:8080/element-plus.css'
   const { data } = await axios.get(url) // 加async awiat 返回的是promise
   // console.log(data)
   return data
