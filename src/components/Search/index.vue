@@ -87,7 +87,7 @@ let lists = computed(() => {
   // console.log(router.getRoutes(), '初始路由')
   return generateFuse(filterRoutes)
 })
-console.log(lists.value)
+// console.log(lists.value)
 // 初始化 fuse.js  作用:模糊搜索的工具
 let fuse
 const initFuse = (list) => {

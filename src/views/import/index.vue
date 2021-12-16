@@ -22,7 +22,6 @@ const uploadExcelSuccess = async ({ headers, bodys }) => {
   // console.log(headers, '---')
   // console.log(bodys, 'bodys')
   const data = generateExcelData(bodys)
-  console.log(data)
   // console.log(data)
   // 插入数据
   await addUserByExcel(data)

@@ -2,9 +2,12 @@
   <div class="user-manage-container">
     <!-- excel按钮 -->
     <el-card class="header">
-      <el-button type="primary" @click="onImportExcel">{{
-        $t('msg.excel.importExcel')
-      }}</el-button>
+      <el-button
+        type="primary"
+        @click="onImportExcel"
+        v-showPermission="'importUser'"
+        >{{ $t('msg.excel.importExcel') }}</el-button
+      >
       <el-button type="success" @click="onExportExcel">
         {{ $t('msg.excel.exportExcel') }}
       </el-button>
@@ -60,16 +63,27 @@
           align="center"
         >
           <template #default="{ row }">
-            <el-button size="mini" type="success">{{
-              $t('msg.excel.show')
-            }}</el-button>
+            <el-button
+              size="mini"
+              type="success"
+              @click="showUserDetail(row)"
+              >{{ $t('msg.excel.show') }}</el-button
+            >
 
-            <el-button size="mini" type="primary">{{
-              $t('msg.excel.showRole')
-            }}</el-button>
-            <el-button size="mini" type="warning" @click="removeData(row)">{{
-              $t('msg.excel.remove')
-            }}</el-button>
+            <el-button
+              size="mini"
+              v-showPermission="'distributePermission'"
+              type="primary"
+              @click="addClick1(row)"
+              >{{ $t('msg.excel.showRole') }}</el-button
+            >
+            <el-button
+              size="mini"
+              type="warning"
+              v-showPermission="'removeUser'"
+              @click="removeData(row)"
+              >{{ $t('msg.excel.remove') }}</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -86,7 +100,7 @@
       ></el-pagination>
     </el-card>
 
-    <!-- 模态框业务 -->
+    <!-- 模态框导出业务 -->
     <export-excel
       :dialogShow="dialogShow"
       @closeDialog="close"
@@ -107,19 +121,44 @@
         <el-option :key="2" label="全部数据" :value="2"> </el-option>
       </el-select>
     </export-excel>
+    <!-- 角色 模态框 -->
+    <add-click
+      :dialogVisible1="dialogVisible1"
+      @closeDialog1="closeDialog1"
+      :dataOne="dataOne"
+      :apr="apr"
+      :getManageUser="getManageUser"
+    >
+      <el-checkbox-group v-model="checkList" @change="ff">
+        <el-checkbox
+          v-for="item in res1"
+          :label="item.title"
+          :key="item.id"
+          :value="item"
+        />
+      </el-checkbox-group>
+    </add-click>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import ExportExcel from '@/components/ExportExcel/index.vue'
 import { getUser, getAllUser, deleteUserById } from '@/api/user-manage.js'
-import { USER_RELATION } from '@/common/common.js'
+import { USER_RELATION, ROLE } from '@/common/common.js'
 import { watchLang } from '@/utils/i18n.js'
 import dateFormate from '@/filters/dataFilter.js'
 import { useI18n } from 'vue-i18n'
 import { ElMessageBox, ElMessage } from 'element-plus'
+import { deleteItem } from '@/utils/storage'
+
+import { getAllRole } from '@/api/role.js'
+// 角色
+import addClick from './addClick/index.vue'
+import { addremovetable } from '@/api/permission.js'
+import { useStore } from 'vuex'
+const store = useStore()
 const i18n = useI18n()
 const router = useRouter()
 // 默认的文件名
@@ -236,10 +275,81 @@ const removeData = (row) => {
     })
 }
 
+// 跳转用户详情
+const showUserDetail = (row) => {
+  router.push({ path: '/user/info/' + row._id })
+}
+
+// 多选框
+// 更改角色
+const dialogVisible1 = ref(false)
+// 点击角色触发模态框选中的模态框内的checkbox的指定数据
+const checkList = ref([])
+// 整行数据
+const dataOne = ref([])
+// 数剧
+const res1 = ref(store.state.roleAndPermission.roles)
+const addClick1 = async (row) => {
+  // 在下次点击之前清空之前点击的值
+  checkList.value = []
+  dialogVisible1.value = true
+  dataOne.value = row
+  const res = await addremovetable(row._id)
+  res.role.forEach((item) => {
+    checkList.value.push(item.title)
+  })
+  // 因为每次退出都会清空vuex 所以如果清空的话就发送请求重新调用接口
+  if (Array.isArray(res1.value) && res1.value.length <= 0) {
+    // 调用请求接口的方法
+    getAllRoles()
+  }
+  ff()
+}
+const getAllRoles = async () => {
+  const res = await getAllRole()
+  res1.value = res
+  console.log(res)
+}
+// 传给子组件的值
+const apr = ref([])
+
+const ff = async () => {
+  // console.log(res)
+  // 利用map 返回新数组的方法 获取到当前点击和所有的角色所匹配的身份
+  // 并保存在新数组中
+  // 之前写的复杂的方法太过于繁琐 所以优化成这种的
+  const result = checkList.value.map((item) => {
+    return res1.value.find((key) => key.title === item)
+  })
+  apr.value = result
+}
+
+const closeDialog1 = () => {
+  dialogVisible1.value = false
+}
+
 // 监听语言变化
-watchLang((lang) => {
-  filename.value = i18n.t('msg.excel.defaultName')
-})
+watchLang(
+  (lang) => {
+    filename.value = i18n.t('msg.excel.defaultName')
+  },
+  () => {
+    getManageUser()
+  },
+  () => {
+    // 当语言发生改变 重新调用接口
+    getAllRoles()
+  }
+)
+watch(
+  () => {
+    return store.getters.language
+  },
+  () => {
+    deleteItem(ROLE)
+    store.dispatch('roleAndPermission/initRles')
+  }
+)
 </script>
 
 <style lang="scss" scoped>

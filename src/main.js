@@ -6,7 +6,8 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // 加载svg的处理
 import initSvaIcon from './icons/index.js'
-
+// 注册指令
+import initDirectives from '@/directives/index.js'
 // 测试右键菜单
 import VueContextMenu from 'vue-contextmenu'
 // 注册全局过滤属性
@@ -22,6 +23,7 @@ import i18n from '@/i18n/index.js'
 const app = createApp(App)
 initSvaIcon(app)
 initfilters(app)
+initDirectives(app)
 // installElementPlus(app)
 app
   .use(store)

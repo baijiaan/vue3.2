@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login/index.vue'
 
 // 私有路由
+/*
 const PrivateRoutes = [
   {
     path: '/user',
@@ -99,8 +100,24 @@ const PrivateRoutes = [
     ]
   }
 ]
+*/
+import Article from './modules/Article.js'
+import ArticleCreate from './modules/ArticleCreate.js'
+import PermissionList from './modules/PermissionList.js'
+import RoleList from './modules/RoleList.js'
+import UserManage from './modules/UserManage.js'
+import store from '@/store/index.js'
+// 将已经配置好的路由信息暴露出去
+export const PrivateRoutes = [
+  Article,
+  ArticleCreate,
+  PermissionList,
+  RoleList,
+  UserManage
+]
+
 // 公共路由 任何权限的用户都能访问
-const PublicRoutes = [
+export const PublicRoutes = [
   {
     path: '/login',
     name: 'Login',
@@ -137,7 +154,22 @@ const PublicRoutes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes: [...PublicRoutes, ...PrivateRoutes]
+  routes: [...PublicRoutes]
 })
+
+// 退出时清空用户所有权限 如果不请空在下次其他用户登录时会出现自己没有的权限当时却还是出现了
+export const clearPrivateRoutes = () => {
+  if (
+    store.getters.userInfo &&
+    store.getters.userInfo.permission &&
+    store.getters.userInfo.permission.menus
+  ) {
+    const menus = store.getters.userInfo.permission.menus
+    menus.forEach((name) => {
+      // 删除每一个角色的当前权限 这样下次在新用户登录时不会出现权限不匹配的问题
+      router.removeRoute(name)
+    })
+  }
+}
 
 export default router

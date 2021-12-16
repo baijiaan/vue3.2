@@ -2,6 +2,7 @@
 import i18n from '@/i18n/index.js'
 import { watch } from 'vue'
 import store from '@/store/index.js'
+import { ElMessage } from 'element-plus'
 export const getTitle = (title) => {
   return i18n.global.t('msg.route.' + title)
 }
@@ -14,7 +15,15 @@ export const watchLang = (...cbs) => {
     },
     () => {
       cbs.forEach((cb) => {
-        cb(store.getters.language)
+        try {
+          cb(store.getters.language)
+        } catch {
+          // 不加异步的话中英文切换的弹框可能会冲突
+          // 加载异步就可以解决这个问题了
+          setTimeout(() => {
+            ElMessage.error('不符合预期')
+          })
+        }
       })
     }
   )

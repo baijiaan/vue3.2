@@ -1,13 +1,14 @@
 import { login, getUserInfo } from '@/api/user.js'
 import md5 from 'md5'
-import router from '@/router/index.js'
+import router, { clearPrivateRoutes } from '@/router/index.js'
 import * as utils from '@/utils/storage.js'
-import { TOKEN, USER_INFO } from '@/common/common.js'
+import { TOKEN } from '@/common/common.js'
 import { setTimeStamp } from '@/utils/auth.js'
 //
 const state = {
   token: utils.getItem(TOKEN) || '',
-  userInfo: utils.getItem(USER_INFO) || {}
+  // userInfo: utils.getItem(USER_INFO) || {}
+  userInfo: {}
 }
 const getters = {}
 const mutations = {
@@ -22,7 +23,8 @@ const mutations = {
   setUserInfo(state, userInfo) {
     console.log(userInfo, '白家安111')
     state.userInfo = userInfo
-    utils.setItem(USER_INFO, userInfo)
+    // 保存在本地
+    // utils.setItem(USER_INFO, userInfo)
   }
 }
 const actions = {
@@ -44,25 +46,27 @@ const actions = {
       })
     })
   },
-  logout({ commit }) {
+  // 退出业务
+  logout(context) {
     // 清理用户数据
-    commit('setToken', '')
-    //
-    commit('setUserInfo', {})
+    context.commit('setToken', '')
+
+    context.dispatch('roleAndPermission/clearRoleAmdPermission', null, {
+      root: true
+    })
+    /// 清空当前该用户的动态路由
+    clearPrivateRoutes()
+    context.commit('setUserInfo', {})
     // 清理数据之后跳转
     router.push('/login')
   },
   // 请求用户数据
-  getUserInfo({ commit }) {
+  async getUserInfo({ commit }) {
     // 发送axios
-    getUserInfo()
-      .then((res) => {
-        console.log(res)
-        commit('setUserInfo', res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    const res = await getUserInfo()
+    commit('setUserInfo', res)
+    // 因为在路由鉴权页面需要拿到用户的登录信息 所以需要返回值
+    return res
   }
 }
 

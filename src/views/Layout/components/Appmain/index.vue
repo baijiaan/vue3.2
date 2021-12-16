@@ -3,7 +3,12 @@
     <!-- 二级路由显示容器 -->
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
-        <component :is="Component" />
+        <!-- 这个地方使用keepalive的作用是在切换页面时点击第几页的时候
+         再次切回来还是保持在第几页
+        -->
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
       </transition>
     </router-view>
   </div>
@@ -18,7 +23,6 @@ import { getTitle as getTitle_, watchLang } from '@/utils/i18n.js'
 
 // 获取title
 const getTitle = (to) => {
-  console.log(to, 'wwww')
   if (!to.meta || !to.meta.title) {
     // 如果不存在title
     const tmp = to.path.splite('/')
@@ -35,14 +39,14 @@ const store = useStore()
 watch(
   route,
   (to, from) => {
-    console.log(to.fullPath, '222')
+    // console.log(to.fullPath, '222')
     if (isNoTag(to.path)) {
       return true
     }
 
     // 路由发生变化 增加到vuex
     const { path, fullPath, meta, name, params, query } = to
-    console.log(to, 'bbb')
+    // console.log(to, 'bbb')
     store.commit('tagViewList/addTagViewList', {
       path,
       fullPath,

@@ -31,6 +31,11 @@ server.interceptors.request.use(
         // 不应该请求
         return Promise.reject(new Error('token 过期'))
       }
+      // 携带语言参数
+      if (store.getters.language) {
+        config.headers['Accept-Language'] = store.getters.language
+      }
+      // 如果存在token 不存在不封装
       config.headers.Authorization = `Bearer ${store.getters.token}`
     }
 

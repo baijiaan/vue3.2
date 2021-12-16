@@ -9416,7 +9416,7 @@
   "resolved" "https://registry.nlark.com/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.0.0-0", "vue@^2.6.0 || ^3.2.0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.8":
+"vue@^2 || ^3.0.0-0", "vue@^2.6.0 || ^3.2.0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.2", "vue@^3.0.5", "vue@^3.2.0", "vue@^3.2.8":
   "integrity" "sha512-x7lwdnOSkceHQUXRVVHBaZzcp6v7M2CYtSZH75zZaT1mTjB4plC4KZHKP/5jAvdqOLBHZGwDSMkWXm3YbAufrA=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.8.tgz"
   "version" "3.2.8"
@@ -9429,6 +9429,13 @@
   "integrity" "sha1-5RqlJQJQ1Wmj+606ilpofWA24jU="
   "resolved" "https://r.cnpmjs.org/vue/download/vue-2.6.14.tgz"
   "version" "2.6.14"
+
+"vue3-print-nb@^0.1.4":
+  "integrity" "sha1-Ee4++IV8NLQD+3gtpyLoKrfiCVI="
+  "resolved" "https://rg.cnpmjs.org/vue3-print-nb/download/vue3-print-nb-0.1.4.tgz"
+  "version" "0.1.4"
+  dependencies:
+    "vue" "^3.0.5"
 
 "vuex@^4.0.2":
   "integrity" "sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q=="

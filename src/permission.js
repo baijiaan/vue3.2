@@ -13,26 +13,33 @@ router.beforeEach(async (to, from, next) => {
 
   if (store.getters.token) {
     // 如果有值就是已经登录的了
-    // console.log(to, 'to')
-    // console.log(store.getters.token)
     if (to.path === '/login') {
       // 如果在有值的情况下就不允许跳转到到登录页面
       next('/')
     } else {
       // 登录成功 跳转到首页 判断如果没有用户的信息 就去发送axios
       if (!store.getters.hasUserInfo) {
-        // true
-        // 判断没有用户的信息 就去发送axios
-        // setTimeout(async () => {.axios的请求
-        //   await store.dispatch('user/getUserInfo')
-        //   next()
-        // }, 70000)
-        await store.dispatch('user/getUserInfo')
+        // 这个解构就是先解构出permission 然后再解构出permission对象内的menus属性
+        const {
+          permission: { menus }
+        } = await store.dispatch('user/getUserInfo')
+        // 1.获取当前用户的所有权限
+        console.log(menus, 'yonghujainquan')
+        // 2.根据权限比对私有路由 获取当前用户能够访问的路由
+        const filtersRoutes = await store.dispatch(
+          'userPermission/filterPrivateRoutes',
+          menus
+        )
+        // 3.将当前用户过滤后的私有路由 ,动态添加到路由表中
+        filtersRoutes.forEach((item) => {
+          router.addRoute(item)
+        })
+        next(to.path)
       }
-      next() // 没有值的时候才可以跳转
+      // 登陆成功后跳转到首页
+      next()
     }
   } else {
-    // console.log(from, 'from')
     if (whiteRouter.indexOf(to.path) > -1) {
       // 如果在没有值的时候跳转到登录页面是可行的
       next()
