@@ -22,10 +22,12 @@ const uploadExcelSuccess = async ({ headers, bodys }) => {
   // console.log(headers, '---')
   // console.log(bodys, 'bodys')
   const data = generateExcelData(bodys)
-  // console.log(data)
+  // console.log(bodys, '22111122')
+  // console.log(data, '啦啦啦啦啦啦')
   // 插入数据
-  await addUserByExcel(data)
-  ElMessage.success(data.length + i18n.t('msg.excel.importSuccess'))
+  await addUserByExcel(data).then((res) => {
+    ElMessage.success(data.length + i18n.t('msg.excel.importSuccess'))
+  })
   // 跳转到用户列表
   router.push({ path: '/user/manage' })
 }
@@ -35,23 +37,21 @@ const beforeUpload = () => {
 
 // 格式化sexcel
 const generateExcelData = (arr) => {
-  console.log(arr)
+  // console.log(arr, 'arr')
   const arr_ = []
   arr.forEach((item) => {
-    console.log(item)
     const obj = {}
     Object.keys(USER_RELATION).forEach((key) => {
       if (USER_RELATION[key] === 'openTime') {
-        USER_RELATION[key] = formatDate[item[key]]
+        obj[USER_RELATION[key]] = formatDate[item[key]]
+        console.log(formatDate[item[key]], '2222')
       } else {
         obj[USER_RELATION[key]] = item[key]
       }
-      // console.log(key)
-      console.log(USER_RELATION[key])
     })
     arr_.push(obj)
-    console.log(obj)
   })
+  console.log(arr_, '处理')
   return arr_
 }
 

@@ -14,7 +14,13 @@
     </el-card>
     <el-card class="primary">
       <!-- table -->
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%"
+        v-loading="loading"
+        element-loading-text="Loading..."
+      >
         <el-table-column
           align="center"
           label="#"
@@ -158,6 +164,8 @@ import { getAllRole } from '@/api/role.js'
 import addClick from './addClick/index.vue'
 import { addremovetable } from '@/api/permission.js'
 import { useStore } from 'vuex'
+// 加载动画
+const loading = ref(true)
 const store = useStore()
 const i18n = useI18n()
 const router = useRouter()
@@ -199,12 +207,15 @@ const currentChange = (currentPage) => {
 }
 // 获取用户数据
 const getManageUser = async () => {
-  const data = await getUser({
+  await getUser({
     page: page.value,
     size: size.value
+  }).then((res) => {
+    tableData.value = exportData.value = res.list
+    total.value = res.total
+    // 关闭动画
+    loading.value = false
   })
-  tableData.value = exportData.value = data.list
-  total.value = data.total
 }
 getManageUser()
 
@@ -213,7 +224,9 @@ const exportData = ref([])
 
 const changeExportType = async (value) => {
   if (value === 1) {
+    // genju select下拉框选择当前是下载当前页还是全部页
     // 下载当前页数
+    exportData.value = tableData.value
     filename.value = `${i18n.t('msg.excel.defaultName')}(${page.value})`
   } else {
     // 下载所有数据

@@ -8,7 +8,7 @@ export default {
   meta: { title: 'article', icon: 'article' },
   children: [
     {
-      path: '/article/create',
+      path: '/article/create/:id',
       component: () => import('@/views/article-create/index'),
       meta: {
         title: 'articleCreate',
@@ -17,6 +17,7 @@ export default {
     },
     {
       path: '/article/editor/:id',
+      props: true,
       component: () => import('@/views/article-create/index'),
       meta: {
         title: 'articleEditor'

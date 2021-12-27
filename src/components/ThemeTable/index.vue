@@ -1,8 +1,9 @@
 <template>
   <div>
-    <el-card>
-      <slot :headerStyleObj="headerStyleObj" />
-    </el-card>
+    <!-- 封装的公共组件 -->
+    <!-- <el-card> -->
+    <slot :headerStyleObj="headerStyleObj" />
+    <!-- </el-card> -->
   </div>
 </template>
 <script setup>
@@ -23,6 +24,9 @@ const hoverBgColor = ref(store.getters.cssVar['light-3'])
 
 const badgeColorHover = ref(store.getters.cssVar['light-1'])
 const badgeColor = ref(store.getters.cssVar['light-3'])
+
+// 拖拽业务的背景色
+const sortableColor = ref(store.getters.cssVar['light-3'])
 // 监听主题切换
 watch(
   () => {
@@ -34,6 +38,7 @@ watch(
     hoverBgColor.value = store.getters.cssVar['light-3']
     badgeColorHover.value = store.getters.cssVar['light-1']
     badgeColor.value = store.getters.cssVar['light-3']
+    sortableColor.value = store.getters.cssVar['light-3']
   }
 )
 // 公共业务
@@ -73,5 +78,10 @@ watchLang(...props.cbs)
   &:hover {
     background-color: v-bind(badgeColorHover);
   }
+}
+// 拖拽时的背景色
+:deep(.ghost) {
+  background-color: v-bind(sortableColor) !important;
+  color: pink !important;
 }
 </style>

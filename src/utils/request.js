@@ -1,7 +1,8 @@
 import axios from 'axios'
 // 利用element框架机制导入报错时弹出
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElLoading } from 'element-plus'
 import { isCheckTimeOut } from './auth.js'
+// 加载动画
 // import { getItem } from '@/utils/storage.js'
 // import { TOKEN } from '@/common/common.js'
 
@@ -21,7 +22,7 @@ const server = axios.create({
 server.interceptors.request.use(
   (config) => {
     // if (whiteUrl.includes(config.url) <= -1) {
-
+    // ElLoading.service({ text: '加载中' })
     if (store.getters.token) {
       // 如果存在TOKEN 进行封装,不存在就不封装
       // 请求的不是login
@@ -54,6 +55,9 @@ server.interceptors.request.use(
 // 错误处理 服务器返回错误  消息提醒
 server.interceptors.response.use(
   (response) => {
+    // 关闭动画
+    // const loadingInstance = ElLoading.service()
+    // ElLoading.service().close()
     // 对响应数据做点什么 对的数据 和 错的数据
     const { success, data, message } = response.data
     if (success) {

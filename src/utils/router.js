@@ -83,6 +83,7 @@ export function generateMenus(routes, basePath = '') {
 
 export const generateFuse = (routes, titles = []) => {
   // 处理格式化 将一级路由以及二级路由格式成为同级的
+  // console.log(routes, 'routes')
   let res = []
   // 遍历routes
   for (const route of routes) {
@@ -90,11 +91,15 @@ export const generateFuse = (routes, titles = []) => {
       path: route.path,
       title: [...titles] // 不递归的话这里是个空 如果迭代这里就是以后的一级标题的title
     }
+    // console.log(data, 'title')
     // console.log(route)
     // 满足这个条件 1.具备meta && meta.title 2.过滤掉动态路由
     // 声明一个正则用于匹配动态路由 /:id
+
     const reg = /.*\/:.*/
     if (route.meta && route.meta.title && !reg.exec(route.path)) {
+      // console.log(route.meta.title, '.....')
+
       // 变成国际化
       const title = i18n.global.t('msg.route.' + route.meta.title)
       data.title = [...data.title, title]

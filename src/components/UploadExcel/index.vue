@@ -10,6 +10,7 @@
       <input
         ref="tagUploadInput"
         type="file"
+        autocomplete="off"
         class="upload-excel-input"
         :accept="accept[type]"
         @change="handleChange"
@@ -111,6 +112,8 @@ const readFile = (rawFile) => {
 
 // 通知父组件解析完成
 const generateData = (result) => {
+  // 之所以加下边这个东西 是因为在路由使用了keepalive 如果不加 点击导入只能够执行一次点击导入 加了就可以解决这个问题
+  tagUploadInput.value.value = null
   props.onSuccess(result)
 }
 

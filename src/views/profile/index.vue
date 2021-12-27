@@ -1,28 +1,28 @@
 <template>
   <div>
-    <div class="">个人中心</div>
-    <p>{{ $t('msg.login.title') }}</p>
-    <div class="demo-pagination-block">
-      <el-pagination
-        v-model:currentPage="currentPage1"
-        :page-size="100"
-        layout="total, prev, pager, next"
-        :total="1000"
-      >
-      </el-pagination>
-      <el-button>Default</el-button>
-      <el-button type="primary">Primary</el-button>
-      <el-button type="success">Success</el-button>
-      <el-button type="info">Info</el-button>
-      <el-button type="warning">Warning</el-button>
-      <el-button type="danger">Danger</el-button>
-      <el-button>中文</el-button>
-    </div>
+    <el-card class="box-card">
+      <div style="vertical-align: middle">
+        欢迎你:<span style="color: pink">{{
+          store.state.user.userInfo.title
+        }}</span
+        ><br />
+        <el-avatar
+          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        ></el-avatar>
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script setup>
-import {} from 'vue'
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+const store = useStore()
+console.log(store.state.user.userInfo.title)
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.box-card {
+  width: 480px;
+}
+</style>

@@ -55,6 +55,7 @@ const close = () => {
 
 // 导出业务执行
 const exportExcel = () => {
+  console.log(props.data, '::::')
   // 1.文件名不选的话应该有默认值 filename 做国际化处理
   // 2.导出全部数据 || 导出当前页数
   // 3. 将服务器返回的用户数据 转换成excel 数据 --
