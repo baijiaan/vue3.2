@@ -1,27 +1,18 @@
 <template>
-  <div id="nav"></div>
-  <router-view />
+  <div>
+    <!-- div -->
+    <div><elemem-pl /></div>
+  </div>
 </template>
+<script setup>
+import ElememPl from '@/components/elementlang/index.vue'
+import { generateNewStyle, writeStyleToHearTag } from '@/utils/theme.js'
+import { useStore } from 'vuex'
+const store = useStore()
+generateNewStyle(store.getters.theme_color).then((res) => {
+  writeStyleToHearTag(res)
+  // console.log(res, 'wwwww')
+})
+</script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+<style></style>
